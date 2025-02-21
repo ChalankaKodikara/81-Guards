@@ -12,14 +12,14 @@ const Client = require("./routes/hris/client.js");
 const Checkpoint = require("./routes/hris/checkpoints.js");
 
 // Import Models
-// require("./models/Employee");
-// require("./models/Doctors.js");
-// require("./models/Doctor_schedule.js");
-// require("./models/Appointment.js");
-// require("./models/Checkpoints.js");
-// require("./models/Client.js");
-// require("./models/EmployeeClientAssignment.js");
-// require("./models/ScannedDetails.js");
+require("./models/Employee");
+require("./models/Doctors.js");
+require("./models/Doctor_schedule.js");
+require("./models/Appointment.js");
+require("./models/Checkpoints.js");
+require("./models/Client.js");
+require("./models/EmployeeClientAssignment.js");
+require("./models/ScannedDetails.js");
 
 const app = express();
 const server = http.createServer(app); // Create HTTP server
