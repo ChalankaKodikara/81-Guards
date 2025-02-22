@@ -43,7 +43,7 @@ const ViewLeaveTable = () => {
     const fetchEmploymentTypes = async () => {
         try {
             const response = await fetch(
-                "https://back-demo-local-hris.quortech-technologies.com/v1/hris/employmentType/all"
+                "http://localhost:8599/v1/hris/employmentType/all"
             );
             const result = await response.json();
             if (result.success) {

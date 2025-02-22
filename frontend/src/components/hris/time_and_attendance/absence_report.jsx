@@ -28,9 +28,9 @@ const Absence_Report = () => {
       let endpoint;
 
       if (userType === "superadmin") {
-        endpoint = `https://back-demo-local-hris.quortech-technologies.com/v1/hris/attendence/getNotAttend?startDate=${formattedStartDate}&endDate=${formattedEndDate}`;
+        endpoint = `http://localhost:8599/v1/hris/attendence/getNotAttend?startDate=${formattedStartDate}&endDate=${formattedEndDate}`;
       } else if (userType === "admin" && supervisorId) {
-        endpoint = `https://back-demo-local-hris.quortech-technologies.com/v1/hris/attendence/getNotAttendBySupervisor?startDate=${formattedStartDate}&endDate=${formattedEndDate}&supervisorId=${supervisorId}`;
+        endpoint = `http://localhost:8599/v1/hris/attendence/getNotAttendBySupervisor?startDate=${formattedStartDate}&endDate=${formattedEndDate}&supervisorId=${supervisorId}`;
       } else {
         console.error("Invalid user type or missing supervisor ID.");
         return;

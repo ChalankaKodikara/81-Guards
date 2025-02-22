@@ -33,7 +33,7 @@ const JobPostingManagement = () => {
         }
 
         try {
-            const response = await fetch(`https://back-demo-local-hris.quortech-technologies.com/v1/hris/jobpost/get-reject-jobposts/${employeeNumber}`);
+            const response = await fetch(`http://localhost:8599/v1/hris/jobpost/get-reject-jobposts/${employeeNumber}`);
             const data = await response.json();
 
             if (data.success) {
@@ -63,7 +63,7 @@ const JobPostingManagement = () => {
         }
 
         try {
-            const response = await fetch(`https://back-demo-local-hris.quortech-technologies.com/v1/hris/jobpost/pending_jobs/${employeeNumber}`);
+            const response = await fetch(`http://localhost:8599/v1/hris/jobpost/pending_jobs/${employeeNumber}`);
             const data = await response.json();
 
             if (data.success) {
@@ -129,7 +129,7 @@ const JobPostingManagement = () => {
         }
 
         try {
-            const response = await fetch(`https://back-demo-local-hris.quortech-technologies.com/v1/hris/jobpost/job-status-counts/${employeeNumber}`);
+            const response = await fetch(`http://localhost:8599/v1/hris/jobpost/job-status-counts/${employeeNumber}`);
             const data = await response.json();
 
             if (data.success) {
@@ -165,7 +165,7 @@ const JobPostingManagement = () => {
         }
 
         try {
-            const response = await fetch(`https://back-demo-local-hris.quortech-technologies.com/v1/hris/jobpost/approved_jobs/${employeeNumber}`);
+            const response = await fetch(`http://localhost:8599/v1/hris/jobpost/approved_jobs/${employeeNumber}`);
             const data = await response.json();
 
             if (data.success) {
@@ -184,7 +184,7 @@ const JobPostingManagement = () => {
     useEffect(() => {
         const fetchDepartments = async () => {
             try {
-                const response = await fetch("https://back-demo-local-hris.quortech-technologies.com/v1/hris/designations/getdesignation");
+                const response = await fetch("http://localhost:8599/v1/hris/designations/getdesignation");
                 const data = await response.json();
                 const uniqueDepartments = Array.from(
                     new Map(data.map((item) => [item.department, item])).values()
@@ -201,7 +201,7 @@ const JobPostingManagement = () => {
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
-                const response = await fetch("https://back-demo-local-hris.quortech-technologies.com/v1/hris/jobpost/employees");
+                const response = await fetch("http://localhost:8599/v1/hris/jobpost/employees");
                 const data = await response.json();
                 if (data.success) {
                     setEmployees(data.data);
@@ -217,7 +217,7 @@ const JobPostingManagement = () => {
     useEffect(() => {
         const fetchEmploymentTypes = async () => {
             try {
-                const response = await fetch("https://back-demo-local-hris.quortech-technologies.com/v1/hris/employmentType/all");
+                const response = await fetch("http://localhost:8599/v1/hris/employmentType/all");
                 const data = await response.json();
                 if (data.success) {
                     setEmploymentTypes(data.data);
@@ -247,7 +247,7 @@ const JobPostingManagement = () => {
         };
 
         try {
-            const response = await fetch("https://back-demo-local-hris.quortech-technologies.com/v1/hris/jobpost/add-jobpost", {
+            const response = await fetch("http://localhost:8599/v1/hris/jobpost/add-jobpost", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -304,7 +304,7 @@ const JobPostingManagement = () => {
         }
 
         try {
-            const response = await fetch("https://back-demo-local-hris.quortech-technologies.com/v1/hris/jobpost/update_approval_status", {
+            const response = await fetch("http://localhost:8599/v1/hris/jobpost/update_approval_status", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -356,7 +356,7 @@ const JobPostingManagement = () => {
         }
 
         try {
-            const response = await fetch("https://back-demo-local-hris.quortech-technologies.com/v1/hris/jobpost/reject_job", {
+            const response = await fetch("http://localhost:8599/v1/hris/jobpost/reject_job", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

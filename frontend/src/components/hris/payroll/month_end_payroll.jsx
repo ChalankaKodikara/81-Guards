@@ -53,7 +53,7 @@ const MonthEndPayroll = () => {
     setLoading(true); // Show loader
     try {
       const response = await fetch(
-        "https://back-demo-local-hris.quortech-technologies.com/v1/hris/payroll/calculate-payroll",
+        "http://localhost:8599/v1/hris/payroll/calculate-payroll",
         {
           method: "POST",
           headers: {
@@ -93,7 +93,7 @@ const MonthEndPayroll = () => {
 
     try {
       const response = await fetch(
-        `https://back-demo-local-hris.quortech-technologies.com/v1/hris/payroll/calculatepayrollbyemployee?employee_no=${employee_no}&month=${selectedMonth}&year=${selectedYear}`
+        `http://localhost:8599/v1/hris/payroll/calculatepayrollbyemployee?employee_no=${employee_no}&month=${selectedMonth}&year=${selectedYear}`
       );
       const result = await response.json();
 

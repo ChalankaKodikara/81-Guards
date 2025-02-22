@@ -29,7 +29,7 @@ const Navbar = () => {
       if (!supervisorId) {
         throw new Error("supervisorId not found in cookies");
       }
-      const response = await fetch(`https://back-demo-local-hris.quortech-technologies.com/v1/hris/leave/notifications?user_id=${supervisorId}`);
+      const response = await fetch(`http://localhost:8599/v1/hris/leave/notifications?user_id=${supervisorId}`);
       if (!response.ok) {
         throw new Error("Failed to fetch notifications");
       }
@@ -44,7 +44,7 @@ const Navbar = () => {
   const markNotificationAsRead = async (notificationId) => {
     try {
       const response = await fetch(
-        `https://back-demo-local-hris.quortech-technologies.com/v1/hris/leave/notifications/mark-read`,
+        `http://localhost:8599/v1/hris/leave/notifications/mark-read`,
         {
           method: "PUT",
           headers: {

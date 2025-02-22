@@ -30,8 +30,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           return (
             <li
               key={subModule._id}
-              className={`flex items-center p-2 ${isSelected ? "font-bold text-white" : "text-gray-200"
-                }`}
+              className={`flex items-center p-2 ${
+                isSelected ? "font-bold text-white" : "text-gray-200"
+              }`}
             >
               {isSelected && (
                 <span className="mr-2 w-2 h-2 bg-white rounded-full"></span>
@@ -52,7 +53,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
     <div
       className={`fixed top-0 left-0 h-screen bg-[#001F3F] p-5 pt-8 shadow-lg 
-        transition-all duration-500 ease-in-out ${isOpen ? "w-64" : "w-20"
+        transition-all duration-500 ease-in-out ${
+          isOpen ? "w-64" : "w-20"
         } flex flex-col ${isShaking ? "animate-shakeX" : ""}`}
       onMouseEnter={() => {
         setIsShaking(true);
@@ -69,15 +71,16 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         <img
           src={Sidebar_Logo}
           alt="Logo"
-          className={`mx-auto transition-transform duration-500 ease-in-out ${isOpen ? "w-24 h-24" : "w-10 h-10"
-            }`}
+          className={`mx-auto transition-transform duration-500 ease-in-out ${
+            isOpen ? "w-24 h-24" : "w-10 h-10"
+          }`}
         />
         {isOpen && (
           <h1 className="text-2xl font-semibold transition-opacity duration-500">
-           QuorTech HRIS
+            Casknet.io{" "}
           </h1>
         )}
-      </div>
+      </div> 
       <div className="overflow-y-auto flex-1 custom-scrollbar">
         <ul>
           {sidebarData.map((module) => {
@@ -87,8 +90,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             return (
               <li key={module._id} className="mt-1">
                 <div
-                  className={`flex items-center p-2 rounded-md cursor-pointer transition-colors duration-300 ease-in-out ${isModuleSelected ? "bg-[#2495FE]" : "hover:bg-[#01E6FF]"
-                    } text-white`}
+                  className={`flex items-center p-2 rounded-md cursor-pointer transition-colors duration-300 ease-in-out ${
+                    isModuleSelected ? "bg-[#2495FE]" : "hover:bg-[#01E6FF]"
+                  } text-white`}
                   onClick={() =>
                     hasSubModules
                       ? toggleSubMenu(module._id)
@@ -97,8 +101,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 >
                   {module.icon && (
                     <span
-                      className={`transition-transform duration-300 ${isOpen ? "scale-100" : "scale-75"
-                        }`}
+                      className={`transition-transform duration-300 ${
+                        isOpen ? "scale-100" : "scale-75"
+                      }`}
                     >
                       {module.icon}
                     </span>

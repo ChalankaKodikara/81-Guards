@@ -36,7 +36,7 @@ const Current_Leave_Balance_table = () => {
   const fetchEmployeeData = async () => {
     try {
       const response = await fetch(
-        "https://back-demo-local-hris.quortech-technologies.com/v1/hris/leave/GetLeaveCountstoallemployee"
+        "http://localhost:8599/v1/hris/leave/GetLeaveCountstoallemployee"
       );
       const result = await response.json();
 

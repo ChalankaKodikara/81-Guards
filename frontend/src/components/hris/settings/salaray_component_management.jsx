@@ -30,7 +30,7 @@ const SalaryComponentManagement = () => {
   const fetchTableData = async () => {
     try {
       const response = await fetch(
-        "https://back-demo-local-hris.quortech-technologies.com/v1/hris/payroll/columns"
+        "http://localhost:8599/v1/hris/payroll/columns"
       );
       if (!response.ok)
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -49,7 +49,7 @@ const SalaryComponentManagement = () => {
   const fetchCurrencyData = async () => {
     try {
       const response = await fetch(
-        "https://back-demo-local-hris.quortech-technologies.com/v1/hris/currency/list"
+        "http://localhost:8599/v1/hris/currency/list"
       );
       if (!response.ok)
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -82,7 +82,7 @@ const SalaryComponentManagement = () => {
 
     try {
       const response = await fetch(
-        `https://back-demo-local-hris.quortech-technologies.com/v1/hris/payroll/getRemainingColumns?type=${selectedValue.toLowerCase()}`
+        `http://localhost:8599/v1/hris/payroll/getRemainingColumns?type=${selectedValue.toLowerCase()}`
       );
       if (!response.ok)
         throw new Error(`Error ${response.status}: ${response.statusText}`);
@@ -115,7 +115,7 @@ const SalaryComponentManagement = () => {
 
     try {
       const response = await fetch(
-        "https://back-demo-local-hris.quortech-technologies.com/v1/hris/payroll/column-suggestions",
+        "http://localhost:8599/v1/hris/payroll/column-suggestions",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

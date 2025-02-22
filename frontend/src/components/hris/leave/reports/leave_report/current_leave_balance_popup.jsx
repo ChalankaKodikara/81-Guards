@@ -15,7 +15,7 @@ const Current_leave_balance_popup = ({
     const fetchLeaveCounts = async () => {
       try {
         const response = await fetch(
-          `https://back-demo-local-hris.quortech-technologies.com/v1/hris/leave/GetLeaveCountstoallemployee?employee_no=${employeeNo}`
+          `http://localhost:8599/v1/hris/leave/GetLeaveCountstoallemployee?employee_no=${employeeNo}`
         );
         const data = await response.json();
         console.log("Fetched Leave Counts:", data); // Log to check the fetched data

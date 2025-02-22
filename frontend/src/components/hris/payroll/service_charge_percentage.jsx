@@ -11,7 +11,7 @@ const Service_Charge_Percentage = () => {
 
   const API_URL =
     process.env.REACT_APP_FRONTEND_URL ||
-    "https://back-demo-local-hris.quortech-technologies.com"; // Fallback to default URL if not provided
+    "http://localhost:8599"; // Fallback to default URL if not provided
 
   // Fetch Employee Data using GET request
   const fetchEmployeeData = async () => {

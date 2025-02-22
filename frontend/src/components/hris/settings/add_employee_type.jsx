@@ -20,7 +20,7 @@ const EmployeeTypeManager = () => {
     const fetchEmployeeTypes = async () => {
         try {
             const response = await fetch(
-                "https://back-demo-local-hris.quortech-technologies.com/v1/hris/employmentType/all"
+                "http://localhost:8599/v1/hris/employmentType/all"
             );
             const data = await response.json();
             if (data.success) {
@@ -46,7 +46,7 @@ const EmployeeTypeManager = () => {
       
         try {
           const response = await fetch(
-            "https://back-demo-local-hris.quortech-technologies.com/v1/hris/employmentType/add",
+            "http://localhost:8599/v1/hris/employmentType/add",
             {
               method: "POST",
               headers: {
@@ -90,7 +90,7 @@ const EmployeeTypeManager = () => {
       
         try {
           const response = await fetch(
-            `https://back-demo-local-hris.quortech-technologies.com/v1/hris/employmentType/update/${editType.id}`,
+            `http://localhost:8599/v1/hris/employmentType/update/${editType.id}`,
             {
               method: "PUT",
               headers: {
@@ -128,7 +128,7 @@ const EmployeeTypeManager = () => {
     const handleDeleteEmployeeType = async () => {
         try {
           const response = await fetch(
-            `https://back-demo-local-hris.quortech-technologies.com/v1/hris/employmentType/delete/${typeToDelete.id}`,
+            `http://localhost:8599/v1/hris/employmentType/delete/${typeToDelete.id}`,
             { method: "DELETE" }
           );
       

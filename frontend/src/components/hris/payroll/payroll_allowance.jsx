@@ -10,7 +10,7 @@ const PayrollAllowance = () => {
     const fetchCardData = async () => {
       try {
         const response = await fetch(
-          "https://back-demo-local-hris.quortech-technologies.com/v1/hris/payroll/allowancesanddeductions?type=allowance"
+          "http://localhost:8599/v1/hris/payroll/allowancesanddeductions?type=allowance"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

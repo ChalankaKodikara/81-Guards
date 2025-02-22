@@ -34,7 +34,7 @@ const Collect_Job_Details = ({ jobId, title, onClose }) => {
 
     const fetchJobDetails = async (jobId) => {
         try {
-            const response = await fetch(`https://back-demo-local-hris.quortech-technologies.com/v1/hris/jobpost/job-by-id/${jobId}`);
+            const response = await fetch(`http://localhost:8599/v1/hris/jobpost/job-by-id/${jobId}`);
             const data = await response.json();
 
             if (data.success) {
@@ -96,7 +96,7 @@ const Collect_Job_Details = ({ jobId, title, onClose }) => {
         };
 
         try {
-            const response = await fetch(`https://back-demo-local-hris.quortech-technologies.com/v1/hris/jobpost/update-jobpost/${jobId}`, {
+            const response = await fetch(`http://localhost:8599/v1/hris/jobpost/update-jobpost/${jobId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

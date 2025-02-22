@@ -9,7 +9,7 @@ const ServiceChargeComponentManagement = () => {
 
   const API_URL =
     process.env.REACT_APP_FRONTEND_URL ||
-    "https://back-demo-local-hris.quortech-technologies.com"; // Fallback URL if not provided
+    "http://localhost:8599"; // Fallback URL if not provided
 
   // Fetch Service Charge Data
   const fetchServiceChargeData = async () => {

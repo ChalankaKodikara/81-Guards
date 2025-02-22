@@ -14,7 +14,7 @@ const LeaveManagement = () => {
   useEffect(() => {
     // Fetch employee leave counts
     fetch(
-      "https://back-demo-local-hris.quortech-technologies.com/v1/hris/leave/GetLeaveCountstoallemployee"
+      "http://localhost:8599/v1/hris/leave/GetLeaveCountstoallemployee"
     )
       .then((response) => response.json())
       .then((data) => {

@@ -50,7 +50,7 @@ useEffect(() => {
 const fetchData = async () => {
   try {
     const response = await fetch(
-      "https://back-demo-local-hris.quortech-technologies.com/v1/hris/leave/getleave"
+      "http://localhost:8599/v1/hris/leave/getleave"
     );
     const result = await response.json();
     setData(result); // Assuming result is the array of employees

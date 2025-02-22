@@ -164,7 +164,7 @@ const EmployeeTable = () => {
       setLoading(true);
       try {
         const response = await fetch(
-          "https://back-demo-local-hris.quortech-technologies.com/v1/hris/employees/getemployeebasicdetails"
+          "http://localhost:8599/v1/hris/employees/getemployeebasicdetails"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
