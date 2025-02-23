@@ -3,6 +3,8 @@ const path = require("path");
 const { addCheckpoint } = require("../../controllers/hris/checkpoints/add");
 const {
   getCheckpointDetails,
+  getCheckpointsByClient,
+  getCheckpointWithEmployees,
 } = require("../../controllers/hris/checkpoints/get");
 const {
   saveScannedDetails,
@@ -28,5 +30,7 @@ router.post("/saveScannedDetails", saveScannedDetails);
 router.get("/getAllScans", getAllScans);
 router.get("/getScansByClient", getScansByClient);
 router.get("/getScansByEmployee", getScansByEmployee);
+router.get("/getCheckpointsByClient", getCheckpointsByClient);
+router.get("/getCheckpointWithEmployees", getCheckpointWithEmployees);
 
 module.exports = router;
