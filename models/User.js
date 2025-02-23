@@ -31,7 +31,7 @@ const User = sequelize.define(
       allowNull: true,
     },
     user_type: {
-      type: DataTypes.ENUM("admin", "superadmin", "user"), // Added 'user' for employees
+      type: DataTypes.ENUM("admin", "superadmin", "user" , "client"), // Added 'user' for employees
       allowNull: false, // Must specify the type of user
     },
     employment: {
