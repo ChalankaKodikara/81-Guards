@@ -15,7 +15,7 @@ const loginUser = async (req, res) => {
         .json({ message: "Username and password are required" });
     }
 
-    // Check if user exists
+    // Check if user exists in the user table
     const [user] = await sequelize.query(
       `SELECT * FROM user WHERE username = ?`,
       {
@@ -38,29 +38,38 @@ const loginUser = async (req, res) => {
     const accessToken = generateAccessToken(user.username, user.user_role);
     const refreshToken = generateRefreshToken(user.username);
 
-    // // Store refresh token
-    // const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
-    // await sequelize.query(
-    //   `INSERT INTO refresh_tokens (employee_no, token, expires_at) 
-    //    VALUES (?, ?, ?)
-    //    ON DUPLICATE KEY UPDATE token = ?, expires_at = ?`,
-    //   {
-    //     replacements: [
-    //       user.employee_no || user.username,
-    //       refreshToken,
-    //       expiresAt,
-    //       refreshToken,
-    //       expiresAt,
-    //     ],
-    //     type: sequelize.QueryTypes.INSERT,
-    //   }
-    // );   
+    let clientDetails = null;
+
+    // If user is a client, fetch client details from the clients table
+    if (user.user_type === "client" && user.employee_no.startsWith("CL")) {
+      const clientId = user.employee_no.replace("CL", ""); // Extract client ID
+      const [client] = await sequelize.query(
+        `SELECT * FROM clients WHERE id = ?`,
+        {
+          replacements: [clientId],
+          type: sequelize.QueryTypes.SELECT,
+        }
+      );
+
+      if (client) {
+        clientDetails = {
+          id: client.id,
+          name: client.name,
+          email: client.email,
+          phone: client.phone,
+          address: client.address,
+          createdAt: client.createdAt,
+          updatedAt: client.updatedAt,
+        };
+      }
+    }
 
     return res.status(200).json({
       employee_no: user.employee_no || null,
       username: user.username,
       user_type: user.user_type,
       user_token: accessToken,
+      client_details: clientDetails, // Returns client details if user is a client
     });
   } catch (error) {
     console.error("Login error:", error);
