@@ -1,5 +1,6 @@
 const ScannedDetail = require("../../../models/ScannedDetails");
 const Checkpoint = require("../../../models/Checkpoints");
+const { sequelize } = require("../../../config/database"); // Ensure correct import of Sequelize instance
 
 const saveScannedDetails = async (req, res) => {
   try {
@@ -97,7 +98,28 @@ const getScansByEmployee = async (req, res) => {
       return res.status(400).json({ message: "employee_no is required." });
     }
 
-    const scanDetails = await ScannedDetail.findAll({ where: { employee_no } });
+    // ✅ Raw SQL Query to join `scanneddetails` with `checkpoints`
+    const query = `
+      SELECT 
+        sd.id,
+        sd.employee_no,
+        sd.checkpoint_id,
+        cp.name AS checkpoint_name, 
+        sd.location_name,
+        sd.scan_date,
+        sd.scan_time,
+        sd.created_at
+      FROM scanneddetails sd
+      JOIN checkpoints cp ON sd.checkpoint_id = cp.id
+      WHERE sd.employee_no = :employee_no
+      ORDER BY sd.scan_date DESC, sd.scan_time DESC
+    `;
+
+    // Execute the query
+    const scanDetails = await sequelize.query(query, {
+      replacements: { employee_no },
+      type: sequelize.QueryTypes.SELECT,
+    });
 
     if (!scanDetails || scanDetails.length === 0) {
       return res
@@ -105,13 +127,13 @@ const getScansByEmployee = async (req, res) => {
         .json({ message: "No scan details found for this employee." });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Scan details retrieved successfully for the employee.",
       scanDetails,
     });
   } catch (error) {
     console.error("Error fetching scan details by employee:", error);
-    res.status(500).json({ message: "Internal server error." });
+    return res.status(500).json({ message: "Internal server error." });
   }
 };
 

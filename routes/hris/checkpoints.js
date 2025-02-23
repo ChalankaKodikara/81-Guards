@@ -5,6 +5,8 @@ const {
   getCheckpointDetails,
   getCheckpointsByClient,
   getCheckpointWithEmployees,
+  getCheckpointQRCode,
+  getcheckpointhistory,
 } = require("../../controllers/hris/checkpoints/get");
 const {
   saveScannedDetails,
@@ -32,5 +34,7 @@ router.get("/getScansByClient", getScansByClient);
 router.get("/getScansByEmployee", getScansByEmployee);
 router.get("/getCheckpointsByClient", getCheckpointsByClient);
 router.get("/getCheckpointWithEmployees", getCheckpointWithEmployees);
+router.get("/getCheckpointQRCode", getCheckpointQRCode);
+router.get("/getcheckpointhistory", getcheckpointhistory);
 
 module.exports = router;

@@ -2,6 +2,9 @@ const Checkpoint = require("../../../models/Checkpoints");
 const Client = require("../../../models/Client");
 const Employee = require("../../../models/Employee");
 const EmployeeClientAssignment = require("../../../models/EmployeeClientAssignment");
+const path = require("path");
+const fs = require("fs");
+const ScannedDetails = require("../../../models/ScannedDetails"); // Import the Sequelize model
 
 const getCheckpointDetails = async (req, res) => {
   try {
@@ -130,9 +133,86 @@ const getCheckpointWithEmployees = async (req, res) => {
   }
 };
 
+const getCheckpointQRCode = async (req, res) => {
+  try {
+    const { checkpoint_id } = req.query;
 
+    if (!checkpoint_id) {
+      return res.status(400).json({ message: "Checkpoint ID is required." });
+    }
+
+    // Construct the QR code filename
+    const qrFileName = `checkpoint-${checkpoint_id}.png`;
+    const qrFilePath = path.join(
+      __dirname,
+      "../../../public/qr-codes",
+      qrFileName
+    );
+
+    // Check if the file exists
+    if (!fs.existsSync(qrFilePath)) {
+      return res
+        .status(404)
+        .json({ message: "QR code not found for this checkpoint." });
+    }
+
+    // Serve the file
+    return res.sendFile(qrFilePath);
+  } catch (error) {
+    console.error("Error retrieving QR code:", error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
+// GET Scan Details by Checkpoint ID
+const getcheckpointhistory = async (req, res) => {
+  try {
+    const { checkpoint_id } = req.query;
+
+    if (!checkpoint_id) {
+      return res.status(400).json({ message: "Checkpoint ID is required." });
+    }
+
+    // Fetch scan details based on checkpoint_id
+    const scanDetails = await ScannedDetails.findAll({
+      where: { checkpoint_id },
+      attributes: [
+        "id",
+        "employee_no",
+        "checkpoint_id",
+        "location_name",
+        "scan_date",
+        "scan_time",
+        "created_at",
+      ],
+      order: [
+        ["scan_date", "DESC"],
+        ["scan_time", "DESC"],
+      ], // Order by latest scan first
+    });
+
+    if (!scanDetails.length) {
+      return res.status(200).json({
+        message: "No scan details found for this checkpoint.",
+        scanDetails: [],
+      });
+    }
+
+    return res.status(200).json({
+      message: "Scan details retrieved successfully.",
+      scanDetails,
+    });
+  } catch (error) {
+    console.error("Error fetching scan details:", error);
+    return res.status(500).json({
+      message: "Server error occurred while retrieving scan history.",
+      error: error.message,
+    });
+  }
+};
 module.exports = {
   getCheckpointDetails,
   getCheckpointsByClient,
   getCheckpointWithEmployees,
+  getCheckpointQRCode,
+  getcheckpointhistory,
 };

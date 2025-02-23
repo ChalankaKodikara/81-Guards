@@ -12,7 +12,7 @@ const addCheckpoint = async (req, res) => {
       if (
         !name ||
         !client_id ||
-        !employee_ids ||
+        !employee_ids || 
         !location_name ||
         !location_address
       ) {

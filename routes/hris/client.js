@@ -3,7 +3,10 @@ const express = require("express");
 const { addClient } = require("../../controllers/hris/clients/add");
 const { updateClient } = require("../../controllers/hris/clients/update");
 const { deleteClient } = require("../../controllers/hris/clients/delete");
-const { getClients } = require("../../controllers/hris/clients/get");
+const {
+  getClients,
+  getClientsbyid,
+} = require("../../controllers/hris/clients/get");
 const {
   addEmployeeToClient,
   getEmployeesByClientId,
@@ -16,8 +19,10 @@ const router = express.Router();
 
 router.post("/add", addClient);
 router.get("/get", getClients);
+router.get("/getClientsbyid", getClientsbyid);
+
 router.put("/update", updateClient);
-router.delete("/delete", deleteClient);
+router.delete("/delete/:id", deleteClient);
 
 // Routes
 router.post("/assignments", addEmployeeToClient); // Add an employee to a client
