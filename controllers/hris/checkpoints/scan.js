@@ -100,20 +100,20 @@ const getScansByEmployee = async (req, res) => {
 
     // ✅ Raw SQL Query to join `scanneddetails` with `checkpoints`
     const query = `
-      SELECT 
-        sd.id,
-        sd.employee_no,
-        sd.checkpoint_id,
-        cp.name AS checkpoint_name, 
-        sd.location_name,
-        sd.scan_date,
-        sd.scan_time,
-        sd.created_at
-      FROM scanneddetails sd
-      JOIN checkpoints cp ON sd.checkpoint_id = cp.id
-      WHERE sd.employee_no = :employee_no
-      ORDER BY sd.scan_date DESC, sd.scan_time DESC
-    `;
+   SELECT 
+     sd.id,
+     sd.employee_no,
+     sd.checkpoint_id,
+     cp.name AS checkpoint_name, 
+     sd.location_name,
+     sd.scan_date, 
+     sd.scan_time,
+     sd.created_at
+   FROM scannedDetails sd  
+   JOIN Checkpoints cp ON sd.checkpoint_id = cp.id
+   WHERE sd.employee_no = :employee_no
+   ORDER BY sd.scan_date DESC, sd.scan_time DESC
+ `;
 
     // Execute the query
     const scanDetails = await sequelize.query(query, {

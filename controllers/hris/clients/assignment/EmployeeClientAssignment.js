@@ -53,29 +53,38 @@ const getEmployeesByClientId = async (req, res) => {
     const { client_id } = req.query;
 
     if (!client_id) {
-      return res
-        .status(400)
-        .json({ message: "Client ID is required as a query parameter." });
+      return res.status(400).json({ message: "Client ID is required." });
     }
 
-    const assignments = await sequelize.query(
-      `SELECT e.employee_no, e.name, e.contact_number, e.employee_category, e.department, e.designation, e.work_location
-       FROM employee e
-       JOIN employeeclientassignments a ON e.employee_no = a.employee_no
-       WHERE a.client_id = ?`,
-      {
-        replacements: [client_id],
-        type: QueryTypes.SELECT,
-      }
-    );
+    // ✅ Raw SQL Query to fetch employees assigned to a client
+    const query = `
+      SELECT 
+        e.employee_no, 
+        e.name, 
+        e.contact_number, 
+        e.employee_category, 
+        e.department, 
+        e.designation, 
+        e.work_location
+      FROM employee e
+      JOIN EmployeeClientAssignments a ON e.employee_no = a.employee_no
+      WHERE a.client_id = :client_id
+    `;
 
-    if (assignments.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No employees found for this client." });
+    // Execute the raw query
+    const employees = await sequelize.query(query, {
+      replacements: { client_id },
+      type: sequelize.QueryTypes.SELECT,
+    });
+
+    if (!employees.length) {
+      return res.status(404).json({ message: "No employees found for this client." });
     }
 
-    return res.status(200).json(assignments);
+    return res.status(200).json({
+      message: "Employees retrieved successfully.",
+      employees,
+    });
   } catch (error) {
     console.error("Error retrieving employees for the client:", error);
     return res.status(500).json({
@@ -84,6 +93,8 @@ const getEmployeesByClientId = async (req, res) => {
     });
   }
 };
+
+
 // Update employee assignments for a client
 const updateEmployeeAssignment = async (req, res) => {
   try {

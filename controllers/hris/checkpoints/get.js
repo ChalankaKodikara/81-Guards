@@ -163,7 +163,7 @@ const getCheckpointQRCode = async (req, res) => {
     res.status(500).json({ message: "Internal server error." });
   }
 };
-// GET Scan Details by Checkpoint ID
+const { sequelize } = require("../../../config/database");
 const getcheckpointhistory = async (req, res) => {
   try {
     const { checkpoint_id } = req.query;
@@ -172,25 +172,28 @@ const getcheckpointhistory = async (req, res) => {
       return res.status(400).json({ message: "Checkpoint ID is required." });
     }
 
-    // Fetch scan details based on checkpoint_id
-    const scanDetails = await ScannedDetails.findAll({
-      where: { checkpoint_id },
-      attributes: [
-        "id",
-        "employee_no",
-        "checkpoint_id",
-        "location_name",
-        "scan_date",
-        "scan_time",
-        "created_at",
-      ],
-      order: [
-        ["scan_date", "DESC"],
-        ["scan_time", "DESC"],
-      ], // Order by latest scan first
+    // ✅ Raw SQL Query to fetch scan details for a given checkpoint
+    const query = `
+      SELECT 
+        id,
+        employee_no,
+        checkpoint_id,
+        location_name,
+        scan_date,
+        scan_time,
+        created_at
+      FROM scannedDetails
+      WHERE checkpoint_id = :checkpoint_id
+      ORDER BY scan_date DESC, scan_time DESC
+    `;
+
+    // Execute the query
+    const scanDetails = await sequelize.query(query, {
+      replacements: { checkpoint_id },
+      type: sequelize.QueryTypes.SELECT,
     });
 
-    if (!scanDetails.length) {
+    if (!scanDetails || scanDetails.length === 0) {
       return res.status(200).json({
         message: "No scan details found for this checkpoint.",
         scanDetails: [],
@@ -208,7 +211,8 @@ const getcheckpointhistory = async (req, res) => {
       error: error.message,
     });
   }
-};
+}; 
+
 module.exports = {
   getCheckpointDetails,
   getCheckpointsByClient,
