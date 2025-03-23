@@ -1,48 +1,48 @@
 const ScannedDetail = require("../../../models/ScannedDetails");
 const Checkpoint = require("../../../models/Checkpoints");
 const { sequelize } = require("../../../config/database"); // Ensure correct import of Sequelize instance
+const { QueryTypes } = require("sequelize");
 
 const saveScannedDetails = async (req, res) => {
   try {
-    const { employee_no, checkpoint_id, location_name, scan_date, scan_time } =
-      req.body;
+    const { employee_no, checkpoint_id, location_name, scan_date, scan_time } = req.body;
 
     // Validate input data
-    if (
-      !employee_no ||
-      !checkpoint_id ||
-      !location_name ||
-      !scan_date ||
-      !scan_time
-    ) {
+    if (!employee_no || !checkpoint_id || !location_name || !scan_date || !scan_time) {
       return res.status(400).json({ message: "All fields are required." });
     }
 
     // Check if the checkpoint exists
-    const checkpoint = await Checkpoint.findByPk(checkpoint_id);
-    if (!checkpoint) {
+    const checkpoint = await sequelize.query(
+      "SELECT id FROM Checkpoints WHERE id = ?",
+      {
+        replacements: [checkpoint_id],
+        type: QueryTypes.SELECT,
+      }
+    );
+
+    if (checkpoint.length === 0) {
       return res.status(404).json({ message: "Checkpoint not found." });
     }
 
-    // Save scanned details
-    const scannedDetail = await ScannedDetail.create({
-      employee_no,
-      checkpoint_id,
-      location_name,
-      scan_date,
-      scan_time,
-    });
+    // Insert scanned details into the database
+    await sequelize.query(
+      `INSERT INTO scannedDetails (employee_no, checkpoint_id, location_name, scan_date, scan_time, created_at)
+       VALUES (?, ?, ?, ?, ?, NOW())`,
+      {
+        replacements: [employee_no, checkpoint_id, location_name, scan_date, scan_time],
+        type: QueryTypes.INSERT,
+      }
+    );
 
     // Send response
-    res.status(201).json({
-      message: "Scanned details saved successfully.",
-      scannedDetail,
-    });
+    res.status(201).json({ message: "Scanned details saved successfully." });
   } catch (error) {
     console.error("Error saving scanned details:", error);
     res.status(500).json({ message: "Internal server error." });
   }
 };
+
 
 const getAllScans = async (req, res) => {
   try {
