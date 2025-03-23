@@ -12,14 +12,14 @@ const loginUser = async (req, res) => {
     if (!username || !password) {
       return res
         .status(400)
-        .json({ message: "Username and password are required" });
+        .json({ message: "Username or employee number and password are required" });
     }
-
-    // Check if user exists in the user table
+ 
+    // Find user by username OR employee_no
     const [user] = await sequelize.query(
-      `SELECT * FROM user WHERE username = ?`,
+      `SELECT * FROM user WHERE username = ? OR employee_no = ?`,
       {
-        replacements: [username],
+        replacements: [username, username], // both fields use the same input
         type: sequelize.QueryTypes.SELECT,
       }
     );
@@ -40,11 +40,11 @@ const loginUser = async (req, res) => {
 
     let clientDetails = null;
 
-    // If user is a client, fetch client details from the clients table
+    // If user is a client, fetch client details
     if (user.user_type === "client" && user.employee_no.startsWith("CL")) {
-      const clientId = user.employee_no.replace("CL", ""); // Extract client ID
+      const clientId = user.employee_no.replace("CL", "");
       const [client] = await sequelize.query(
-        `SELECT * FROM clients WHERE id = ?`,
+        `SELECT * FROM Clients WHERE id = ?`,
         {
           replacements: [clientId],
           type: sequelize.QueryTypes.SELECT,
@@ -69,7 +69,7 @@ const loginUser = async (req, res) => {
       username: user.username,
       user_type: user.user_type,
       user_token: accessToken,
-      client_details: clientDetails, // Returns client details if user is a client
+      client_details: clientDetails,
     });
   } catch (error) {
     console.error("Login error:", error);

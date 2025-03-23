@@ -11,6 +11,7 @@ const EmployeeRoutes = require("./routes/hris/employee.js");
 const Client = require("./routes/hris/client.js");
 const Checkpoint = require("./routes/hris/checkpoints.js");
 const User = require("./routes/hris/user.js");
+const Bulk = require("./routes/hris/bulkroutes.js");
 
 
 // Import Models 
@@ -22,7 +23,7 @@ require("./models/Checkpoints.js");
 require("./models/Client.js");
 require("./models/EmployeeClientAssignment.js");
 require("./models/ScannedDetails.js");
- require("./models/User");
+require("./models/User");
 
 
 const app = express();
@@ -51,6 +52,7 @@ app.use("/v1/81guards/employees", EmployeeRoutes);
 app.use("/v1/81guards/client", Client);
 app.use("/v1/81guards/checkpoints", Checkpoint);
 app.use("/v1/81guards/user", User);
+app.use("/v1/81guards/bulkemployees", Bulk);
 
   
 // 404 Error Handling
